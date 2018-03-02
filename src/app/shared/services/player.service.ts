@@ -1,89 +1,56 @@
-import { catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/Observable/of';
-import { Player } from './../models/player.model';
+import { Player, GenderType } from './../models/player.model';
+import { Subject } from 'rxjs/Subject';
+
+interface IPlayer {
+    id: number;
+    firstName?: string;
+    lastName?: string;
+    gender?: 0 | 1 | 2;
+    emailAddress: string;
+}
 
 @Injectable()
 export class PlayerService {
-    private players: Player[] = [
-        {
-            Id: 'player1',
-            Nickname: 'Mario',
-            FirstName: 'Masaru',
-            LastName: 'Hongō',
-            Gender: 'männlich',
-        },
-        {
-            Id: 'player2',
-            Nickname: 'Gregor',
-            FirstName: 'Kakeru',
-            LastName: 'Daichi',
-            Gender: 'männlich',
-        },
-        {
-            Id: 'player3',
-            Nickname: 'Kevin',
-            FirstName: 'Kenta',
-            LastName: 'Ishii',
-            Gender: 'männlich',
-        },
-        {
-            Id: 'player4',
-            Nickname: 'Sascha',
-            FirstName: 'Taichi',
-            LastName: 'Ōta',
-            Gender: 'männlich',
-        },
-        {
-            Id: 'player5',
-            Nickname: 'Tino',
-            FirstName: 'Hideo',
-            LastName: 'Obata',
-            Gender: 'männlich',
-        },
-        {
-            Id: 'player6',
-            Nickname: 'Tommy',
-            FirstName: 'Mamoru',
-            LastName: 'Ōtaka',
-            Gender: 'männlich',
-        }
-    ];
+    public onSaved: Subject<Player> = new Subject<Player>();
 
-    constructor() { }
+    private url = 'http://localhost:5000/api/players';
+
+
+    constructor(private http: HttpClient) { }
 
     public getPlayers(): Observable<Player[]> {
-        return Observable.create(subscriber => {
-            subscriber.next(this.players);
-            subscriber.complete();
-        }).pipe(
-            catchError(this.handleError('getPlayers', []))
-        );
+        return this.http.get<IPlayer[]>(this.url).pipe(
+            map(iplayers => iplayers.map(iplayer => this.toPlayer(iplayer))
+            )).pipe(
+                catchError(this.handleError('getPlayers', []))
+            );
     }
 
-    getPlayer(playerId: string): Observable<Player> {
-        return Observable.create(subscriber => {
-            subscriber.next(this.players.find(player => player.Id === playerId));
-            subscriber.complete();
-        }).pipe(
-            catchError(this.handleError('getPlayer', []))
+    public getPlayer(playerId: string): Observable<Player> {
+        return this.http.get<IPlayer>(`${this.url}/${playerId}`).pipe(
+            map(iplayer => this.toPlayer(iplayer))
+        ).pipe(
+            catchError(this.handleError('getPlayer', null))
         );
     }
 
 
     public savePlayer(updatedPlayer: Player): Observable<Player> {
-        return Observable.create(subscriber => {
-            const currentPlayer = this.players.find(entry => entry.Id === updatedPlayer.Id);
-            if (!!currentPlayer) {
-                currentPlayer.LastName = updatedPlayer.LastName;
-                currentPlayer.FirstName = updatedPlayer.FirstName;
-                currentPlayer.Gender = updatedPlayer.Gender;
-            }
-            subscriber.next(currentPlayer);
-            subscriber.complete(currentPlayer);
-        });
+        return this.http.put<IPlayer>(`${this.url}/${updatedPlayer.Id}`, this.toRequest(updatedPlayer)).pipe(
+            map(result => {
+                this.onSaved.next(this.toPlayer(result));
+                return this.toPlayer(result);
+            })
+        ).pipe(
+            catchError(this.handleError('getPlayer', null))
+        );
+
     }
 
     private handleError<T>(operation = 'operation', result?: T) {
@@ -102,5 +69,58 @@ export class PlayerService {
             });
         };
     }
+
+    private toPlayer(iplayer: IPlayer): Player {
+        return new Player(
+            iplayer.id,
+            iplayer.firstName,
+            iplayer.lastName,
+            this.intToGender(iplayer.gender),
+            iplayer.emailAddress
+        );
+    }
+
+    private toRequest(player: Player): any {
+        return {
+            'id': player.Id,
+            'emailAddress': player.Email,
+            'firstName': player.FirstName,
+            'lastName': player.LastName,
+            'gender': this.GenderToInt(player.Gender),
+        };
+    }
+
+    private intToGender(raw: number): GenderType {
+        let result: GenderType = 'unbekannt';
+        switch (raw) {
+            case 0:
+                result = 'männlich';
+                break;
+            case 1:
+                result = 'weiblich';
+                break;
+            case 2:
+                result = 'unbekannt';
+                break;
+        }
+        return result;
+    }
+
+    private GenderToInt(gender: GenderType): number {
+        let result = 0;
+        switch (gender) {
+            case 'männlich':
+                result = 0;
+                break;
+            case 'weiblich':
+                result = 1;
+                break;
+            case 'unbekannt':
+                result = 2;
+                break;
+        }
+        return result;
+    }
+
 
 }

@@ -11,7 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PlayerListComponent implements OnInit {
     public selectedPlayer: Player;
     public players: Player[];
-    public edit: boolean;
+
+    private playerId: number;
 
     constructor(
         private router: Router,
@@ -23,13 +24,28 @@ export class PlayerListComponent implements OnInit {
         this.playerService.getPlayers().subscribe(
             (result: Player[]) => {
                 this.players = result;
+                if (!!this.playerId) {
+                    this.selectPlayer(this.playerId);
+                }
             }
         );
+
+        this.playerService.onSaved.subscribe((updatedPlayer) => {
+            // tslint:disable-next-line:triple-equals
+            const currentPlayer = this.players.find(player => player.Id == updatedPlayer.Id);
+            if (currentPlayer) {
+                currentPlayer.FirstName = updatedPlayer.FirstName;
+                currentPlayer.LastName = updatedPlayer.LastName;
+            }
+        });
+
         this.route.children.forEach((childroute) => {
             childroute.params.subscribe(params => {
-                console.log(JSON.stringify(params));
                 if (!!params['playerId']) {
-                    this.selectedPlayer = this.players.find(player => player.Id === params['playerId']);
+                    this.playerId = params['playerId'];
+                    if (this.players) {
+                        this.selectPlayer(params['playerId']);
+                    }
                 }
             });
         });
@@ -38,9 +54,15 @@ export class PlayerListComponent implements OnInit {
     public onSelect(player: Player) {
         if (player !== this.selectedPlayer) {
             this.selectedPlayer = player;
-            this.edit = false;
             this.router.navigate(['list', player.Id, 'view']);
         }
 
+    }
+
+    private selectPlayer(playerId: number) {
+        this.selectedPlayer = this.players.find(player => {
+            // tslint:disable-next-line:triple-equals
+            return player.Id == playerId;
+        });
     }
 }

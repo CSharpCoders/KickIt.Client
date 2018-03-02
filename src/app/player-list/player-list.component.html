@@ -3,7 +3,7 @@
     class="player-list__player" 
     [class.is-selected]="player === selectedPlayer"
     (click)="onSelect(player)">
-    <span class="player__nickname">{{player.Nickname}}</span> {{player.FirstName}} {{player.LastName}}
+    {{player.FirstName}} {{player.LastName}}
 </div>
 <nav *ngIf="selectedPlayer">
         <a routerLink="/list/{{selectedPlayer.Id}}/view">Ansehen</a>

@@ -23,11 +23,6 @@
     cursor: pointer;
 }
 
-.player__nickname{
-    font-weight: bold;
-    color:orange;
-}
-
 .is-selected {
     background-color:darkblue;
 }

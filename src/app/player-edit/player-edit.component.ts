@@ -51,11 +51,14 @@ export class PlayerEditComponent implements OnInit {
     public onSubmit() {
         this.playerService.savePlayer({
             Id: this.player.Id,
-            Nickname: this.player.Nickname,
             FirstName: this.playerForm.value.firstname as string,
             LastName: this.playerForm.value.lastname as string,
-            Gender: this.playerForm.value.gender
-        }).subscribe(() => {
+            Gender: this.playerForm.value.gender,
+            Email: this.player.Email,
+        }).subscribe((response) => {
+            this.player.FirstName = response.FirstName;
+            this.player.LastName = response.LastName;
+            this.player.Gender = response.Gender;
             this.revert();
         });
     }
