@@ -8,6 +8,7 @@ import { PlayerListComponent } from './player-list/player-list.component';
 import { PlayerInfoComponent } from './player-info/player-info.component';
 import { PlayerService } from './shared/services/player.service';
 import { PlayerEditComponent } from './player-edit/player-edit.component';
+import { AppRoutingModule } from './/app-routing.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { PlayerEditComponent } from './player-edit/player-edit.component';
     imports: [
         BrowserModule,
         ReactiveFormsModule,
+        AppRoutingModule,
     ],
     providers: [
         PlayerService
