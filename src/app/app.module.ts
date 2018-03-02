@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { PlayerListComponent } from './player-list/player-list.component';
 import { PlayerInfoComponent } from './player-info/player-info.component';
+import { PlayerService } from './shared/services/player.service';
 
 
 @NgModule({
@@ -16,7 +17,9 @@ import { PlayerInfoComponent } from './player-info/player-info.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+    providers: [
+        PlayerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
