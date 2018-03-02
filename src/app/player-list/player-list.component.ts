@@ -1,3 +1,4 @@
+import { PlayerService } from './../shared/services/player.service';
 import { Player } from './../shared/models/player.model';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,53 +11,16 @@ export class PlayerListComponent implements OnInit {
     public selectedPlayer: Player;
     public players: Player[];
 
-    constructor() { }
+    constructor(
+        private playerService: PlayerService
+    ) { }
 
     ngOnInit() {
-        this.players = [
-            {
-                Id: 'player1',
-                Nickname: 'Mario',
-                FirstName: 'Masaru',
-                LastName: 'Hongō',
-                Gender: 'Männlich',
-            },
-            {
-                Id: 'player2',
-                Nickname: 'Gregor',
-                FirstName: 'Kakeru',
-                LastName: 'Daichi',
-                Gender: 'Männlich',
-            },
-            {
-                Id: 'player3',
-                Nickname: 'Kevin',
-                FirstName: 'Kenta',
-                LastName: 'Ishii',
-                Gender: 'Männlich',
-            },
-            {
-                Id: 'player4',
-                Nickname: 'Sascha',
-                FirstName: 'Taichi',
-                LastName: 'Ōta',
-                Gender: 'Männlich',
-            },
-            {
-                Id: 'player5',
-                Nickname: 'Tino',
-                FirstName: 'Hideo',
-                LastName: 'Obata',
-                Gender: 'Männlich',
-            },
-            {
-                Id: 'player6',
-                Nickname: 'Tommy',
-                FirstName: 'Mamoru',
-                LastName: 'Ōtaka',
-                Gender: 'Männlich',
+        this.playerService.getPlayers().subscribe(
+            (result: Player[]) => {
+                this.players = result;
             }
-        ];
+        );
     }
 
     public onSelect(player: Player) {

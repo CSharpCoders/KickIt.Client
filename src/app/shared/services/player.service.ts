@@ -9,7 +9,7 @@ import { Player } from './../models/player.model';
 
 @Injectable()
 export class PlayerService {
-    private url: string;
+    private url = 'http://localhost:5000/player';
 
     constructor(private http: HttpClient) { }
 
@@ -29,8 +29,11 @@ export class PlayerService {
             // TODO: better job of transforming error for user consumption
             console.log(`${operation} failed: ${error.message}`);
 
-            // Let the app keep running by returning an empty result.
-            return of(result as T);
+            // publish the desired failed result
+            return Observable.create(subscriber => {
+                subscriber.next(result as T);
+                subscriber.complete();
+            });
         };
     }
 
