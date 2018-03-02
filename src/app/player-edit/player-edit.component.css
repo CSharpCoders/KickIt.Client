@@ -1,0 +1,50 @@
+.form{
+    background-color: inherit;
+    border-style: double;
+    border-width: 4px;
+    padding: 8px;
+    border-color: orange;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form__submit{
+    background-color: darkgreen;
+    color:white;
+}
+
+.form__submit:disabled{
+    color:lightgray;
+}
+
+.form__submit:hover:not(:disabled){
+    background-color:lightgreen;
+}
+
+.form__revert{
+    background-color: darkred;
+    color:white;
+}
+
+.form__revert:disabled{
+    color:lightgray;
+}
+
+.form__revert:hover:not(:disabled){
+    background-color:red;
+}
+
+
+.form__property{
+    font-weight: bold;
+    width: 250px;
+}
+
+.form__input{
+    width: 250px;
+}
+
+.form__select{
+    width: 250px;
+}

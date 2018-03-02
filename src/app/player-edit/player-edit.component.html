@@ -1,3 +1,31 @@
-<p>
-  player-edit works!
-</p>
+
+<form class="form" *ngIf="!!player" [formGroup]="playerForm" (ngSubmit)="onSubmit()" novalidate>
+    <label class="form__property">
+        <span>Vorname</span>
+        <input 
+            type="text" 
+            class="form__input" 
+            formControlName="firstname">
+    </label>
+    <label class="form__property">
+        <span>Nachname</span>
+        <input 
+            type="text" 
+            class="form__input" 
+            formControlName="lastname">
+    </label>
+    <label class="form__property">
+        <span>Geschlecht</span>
+        <select 
+            class="form__select"
+            formControlName="gender">
+            <option *ngFor="let gender of genders">{{gender}}</option>
+        </select>
+    </label>
+    <div>
+        <button type="submit"
+                [disabled]="playerForm.pristine" class="form__submit">Speichern</button> &nbsp;
+        <button type="reset" (click)="revert()"
+                [disabled]="playerForm.pristine" class="form__revert">Zurücksetzen</button>
+    </div>
+</form>

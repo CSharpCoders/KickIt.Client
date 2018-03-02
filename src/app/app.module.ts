@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 
@@ -19,7 +19,7 @@ import { PlayerEditComponent } from './player-edit/player-edit.component';
     ],
     imports: [
         BrowserModule,
-        FormsModule,
+        ReactiveFormsModule,
     ],
     providers: [
         PlayerService

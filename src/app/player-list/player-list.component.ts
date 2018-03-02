@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class PlayerListComponent implements OnInit {
     public selectedPlayer: Player;
     public players: Player[];
+    public edit: boolean;
 
     constructor(
         private playerService: PlayerService
@@ -24,6 +25,14 @@ export class PlayerListComponent implements OnInit {
     }
 
     public onSelect(player: Player) {
-        this.selectedPlayer = player;
+        if (player !== this.selectedPlayer) {
+            this.selectedPlayer = player;
+            this.edit = false;
+        }
     }
+
+    public editPlayer(player: Player) {
+        this.edit = true;
+    }
+
 }

@@ -5,14 +5,20 @@
     padding: 8px;
 }
 
+.player-list{
+    display: flex;
+    flex-direction: row;
+}
+
 .player-list__player{
     border-style: solid;
     padding: 4px;
     border-color: orange;
-    color: white;
     margin: 2px;
     border-radius: 4px;
     user-select: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .player-list__player:hover:not(.is-selected){

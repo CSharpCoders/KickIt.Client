@@ -13,42 +13,42 @@ export class PlayerService {
             Nickname: 'Mario',
             FirstName: 'Masaru',
             LastName: 'Hongō',
-            Gender: 'Männlich',
+            Gender: 'männlich',
         },
         {
             Id: 'player2',
             Nickname: 'Gregor',
             FirstName: 'Kakeru',
             LastName: 'Daichi',
-            Gender: 'Männlich',
+            Gender: 'männlich',
         },
         {
             Id: 'player3',
             Nickname: 'Kevin',
             FirstName: 'Kenta',
             LastName: 'Ishii',
-            Gender: 'Männlich',
+            Gender: 'männlich',
         },
         {
             Id: 'player4',
             Nickname: 'Sascha',
             FirstName: 'Taichi',
             LastName: 'Ōta',
-            Gender: 'Männlich',
+            Gender: 'männlich',
         },
         {
             Id: 'player5',
             Nickname: 'Tino',
             FirstName: 'Hideo',
             LastName: 'Obata',
-            Gender: 'Männlich',
+            Gender: 'männlich',
         },
         {
             Id: 'player6',
             Nickname: 'Tommy',
             FirstName: 'Mamoru',
             LastName: 'Ōtaka',
-            Gender: 'Männlich',
+            Gender: 'männlich',
         }
     ];
 
@@ -61,6 +61,19 @@ export class PlayerService {
         }).pipe(
                 catchError(this.handleError('getHeroes', []))
             );
+    }
+
+    public savePlayer(updatedPlayer: Player): Observable<Player> {
+        return Observable.create(subscriber => {
+            const currentPlayer = this.players.find(entry => entry.Id === updatedPlayer.Id);
+            if (!!currentPlayer) {
+                currentPlayer.LastName = updatedPlayer.LastName;
+                currentPlayer.FirstName = updatedPlayer.FirstName;
+                currentPlayer.Gender = updatedPlayer.Gender;
+            }
+            subscriber.next(currentPlayer);
+            subscriber.complete(currentPlayer);
+        });
     }
 
     private handleError<T>(operation = 'operation', result?: T) {
