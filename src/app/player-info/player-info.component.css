@@ -1,0 +1,18 @@
+.player-info {
+    background-color: inherit;
+    color: white;
+    border-style: double;
+    border-width: 4px;
+    padding: 8px;
+    border-color: orange;
+    border-radius: 8px;
+}
+
+.player-info__id{
+    font-style: italic;
+    color: lightgray;
+}
+
+.player-info__property{
+    font-weight: bold;
+}
