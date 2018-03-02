@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 
@@ -10,18 +11,19 @@ import { PlayerEditComponent } from './player-edit/player-edit.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PlayerListComponent,
-    PlayerInfoComponent,
-    PlayerEditComponent
-  ],
-  imports: [
-      BrowserModule,
-  ],
+    declarations: [
+        AppComponent,
+        PlayerListComponent,
+        PlayerInfoComponent,
+        PlayerEditComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+    ],
     providers: [
         PlayerService
-  ],
-  bootstrap: [AppComponent]
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
