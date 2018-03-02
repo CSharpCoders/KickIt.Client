@@ -1,22 +1,65 @@
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/Observable/of';
-import { catchError } from 'rxjs/operators';
-
 import { Player } from './../models/player.model';
 
 @Injectable()
 export class PlayerService {
-    private url = 'http://localhost:5000/player';
+    private players: Player[] = [
+        {
+            Id: 'player1',
+            Nickname: 'Mario',
+            FirstName: 'Masaru',
+            LastName: 'Hongō',
+            Gender: 'Männlich',
+        },
+        {
+            Id: 'player2',
+            Nickname: 'Gregor',
+            FirstName: 'Kakeru',
+            LastName: 'Daichi',
+            Gender: 'Männlich',
+        },
+        {
+            Id: 'player3',
+            Nickname: 'Kevin',
+            FirstName: 'Kenta',
+            LastName: 'Ishii',
+            Gender: 'Männlich',
+        },
+        {
+            Id: 'player4',
+            Nickname: 'Sascha',
+            FirstName: 'Taichi',
+            LastName: 'Ōta',
+            Gender: 'Männlich',
+        },
+        {
+            Id: 'player5',
+            Nickname: 'Tino',
+            FirstName: 'Hideo',
+            LastName: 'Obata',
+            Gender: 'Männlich',
+        },
+        {
+            Id: 'player6',
+            Nickname: 'Tommy',
+            FirstName: 'Mamoru',
+            LastName: 'Ōtaka',
+            Gender: 'Männlich',
+        }
+    ];
 
-    constructor(private http: HttpClient) { }
+    constructor() { }
 
     public getPlayers(): Observable<Player[]> {
-        return this.http.get<Player[]>(this.url)
-            .pipe(
-                catchError(this.handleError('getPlayers', []))
+        return Observable.create(subscriber => {
+            subscriber.next(this.players);
+            subscriber.complete();
+        }).pipe(
+                catchError(this.handleError('getHeroes', []))
             );
     }
 
