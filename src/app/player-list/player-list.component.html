@@ -1,6 +1,11 @@
-<div class="player-list">
-    <h2>Spieler</h2>
-    <div class="player-list__player" *ngFor="let player of players"> 
-        <span class="player__nickname">{{player.Nickname}}</span> {{player.FirstName}} {{player.LastName}}
-    </div>
+<h2>Spieler</h2>
+<div *ngFor="let player of players"
+    class="player-list__player" 
+    [class.is-selected]="player === selectedPlayer"
+    (click)="onSelect(player)"> 
+    <span class="player__nickname">{{player.Nickname}}</span> {{player.FirstName}} {{player.LastName}}
 </div>
+<kickit-player-info 
+    class="player-list__details" 
+    [player]="selectedPlayer">
+</kickit-player-info>

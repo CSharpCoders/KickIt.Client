@@ -5,10 +5,6 @@
     padding: 8px;
 }
 
-.player-list{
-    color: Orange;
-}
-
 .player-list__player{
     border-style: solid;
     padding: 4px;
@@ -16,9 +12,23 @@
     color: white;
     margin: 2px;
     border-radius: 4px;
+    user-select: none;
+}
+
+.player-list__player:hover:not(.is-selected){
+    background-color:lightskyblue;
+    cursor: pointer;
 }
 
 .player__nickname{
     font-weight: bold;
     color:orange;
+}
+
+.is-selected {
+    background-color:darkblue;
+}
+
+.player-list__details{
+    background-color:darkblue;
 }
