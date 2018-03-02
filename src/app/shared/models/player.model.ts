@@ -3,6 +3,7 @@ export class Player {
     public Nickname: string;
     public FirstName: string;
     public LastName: string;
+    public Gender: string;
 
     constructor(
     ) {

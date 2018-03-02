@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./player-list.component.css']
 })
 export class PlayerListComponent implements OnInit {
+    public selectedPlayer: Player;
     public players: Player[];
-
 
     constructor() { }
 
@@ -18,39 +18,48 @@ export class PlayerListComponent implements OnInit {
                 Id: 'player1',
                 Nickname: 'Mario',
                 FirstName: 'Masaru',
-                LastName: 'Hongō'
+                LastName: 'Hongō',
+                Gender: 'Männlich',
             },
             {
                 Id: 'player2',
                 Nickname: 'Gregor',
                 FirstName: 'Kakeru',
-                LastName: 'Daichi'
+                LastName: 'Daichi',
+                Gender: 'Männlich',
             },
             {
                 Id: 'player3',
                 Nickname: 'Kevin',
                 FirstName: 'Kenta',
-                LastName: 'Ishii'
+                LastName: 'Ishii',
+                Gender: 'Männlich',
             },
             {
                 Id: 'player4',
                 Nickname: 'Sascha',
                 FirstName: 'Taichi',
-                LastName: 'Ōta'
+                LastName: 'Ōta',
+                Gender: 'Männlich',
             },
             {
                 Id: 'player5',
                 Nickname: 'Tino',
                 FirstName: 'Hideo',
-                LastName: 'Obata'
+                LastName: 'Obata',
+                Gender: 'Männlich',
             },
             {
                 Id: 'player6',
                 Nickname: 'Tommy',
                 FirstName: 'Mamoru',
-                LastName: 'Ōtaka'
+                LastName: 'Ōtaka',
+                Gender: 'Männlich',
             }
         ];
     }
 
+    public onSelect(player: Player) {
+        this.selectedPlayer = player;
+    }
 }
