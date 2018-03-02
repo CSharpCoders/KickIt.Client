@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from './../shared/services/player.service';
 import { Player } from './../shared/models/player.model';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
@@ -8,8 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     templateUrl: './player-edit.component.html',
     styleUrls: ['./player-edit.component.css']
 })
-export class PlayerEditComponent implements OnChanges {
-    @Input() public player: Player;
+export class PlayerEditComponent implements OnChanges, OnInit {
+    public player: Player;
     public playerForm: FormGroup;
     public genders: string[] = [
         'männlich',
@@ -18,6 +19,7 @@ export class PlayerEditComponent implements OnChanges {
 
     constructor(
         private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
         private playerService: PlayerService
     ) {
         this.playerForm = this.formBuilder.group(
@@ -27,6 +29,17 @@ export class PlayerEditComponent implements OnChanges {
                 gender: ['', [Validators.required]],
             }
         );
+    }
+
+    public ngOnInit() {
+        this.getPlayer();
+    }
+
+    private getPlayer() {
+        this.playerService.getPlayer(this.route.snapshot.paramMap.get('playerId'))
+            .subscribe(player => {
+                this.player = player;
+            });
     }
 
     public ngOnChanges(changes: SimpleChanges) {

@@ -59,9 +59,19 @@ export class PlayerService {
             subscriber.next(this.players);
             subscriber.complete();
         }).pipe(
-                catchError(this.handleError('getHeroes', []))
-            );
+            catchError(this.handleError('getPlayers', []))
+        );
     }
+
+    getPlayer(playerId: string): Observable<Player> {
+        return Observable.create(subscriber => {
+            subscriber.next(this.players.find(player => player.Id === playerId));
+            subscriber.complete();
+        }).pipe(
+            catchError(this.handleError('getPlayer', []))
+        );
+    }
+
 
     public savePlayer(updatedPlayer: Player): Observable<Player> {
         return Observable.create(subscriber => {

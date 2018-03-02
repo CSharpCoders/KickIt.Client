@@ -30,9 +30,4 @@ export class PlayerListComponent implements OnInit {
             this.edit = false;
         }
     }
-
-    public editPlayer(player: Player) {
-        this.edit = true;
-    }
-
 }

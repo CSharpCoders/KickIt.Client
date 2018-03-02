@@ -1,9 +1,6 @@
 .form{
-    background-color: inherit;
-    border-style: double;
-    border-width: 4px;
     padding: 8px;
-    border-color: orange;
+    background-color: darkblue;
     border-radius: 8px;
     display: flex;
     flex-direction: column;

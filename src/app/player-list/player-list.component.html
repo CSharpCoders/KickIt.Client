@@ -3,21 +3,10 @@
     class="player-list__player" 
     [class.is-selected]="player === selectedPlayer"
     (click)="onSelect(player)">
-    <div> 
-        <span class="player__nickname">{{player.Nickname}}</span> {{player.FirstName}} {{player.LastName}}
-    </div>
-    <button
-        *ngIf="player === selectedPlayer"
-        class="player__edit" 
-        (click)="editPlayer(player)">"{{player.Nickname}}" Bearbeiten</button>
+    <span class="player__nickname">{{player.Nickname}}</span> {{player.FirstName}} {{player.LastName}}
 </div>
-<kickit-player-info 
-    class="player-list__details"
-    *ngIf="!edit" 
-    [player]="selectedPlayer">
-</kickit-player-info>
-<kickit-player-edit 
-    class="player-list__details"
-    *ngIf="!!edit"
-    [player]="selectedPlayer">
-</kickit-player-edit>
+<nav *ngIf="selectedPlayer">
+        <a routerLink="/list/{{selectedPlayer.Id}}/view">Ansehen</a>
+        <a routerLink="/list/{{selectedPlayer.Id}}/edit">Bearbeiten</a>
+    </nav>
+<router-outlet></router-outlet>
