@@ -18,6 +18,11 @@ export class PlayerInfoComponent implements OnInit {
 
     public ngOnInit() {
         this.getPlayer();
+        this.route.params.subscribe(params => {
+            if (!!params['playerId']) {
+                this.getPlayer();
+            }
+        });
     }
 
     private getPlayer() {

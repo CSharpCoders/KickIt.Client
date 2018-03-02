@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     templateUrl: './player-edit.component.html',
     styleUrls: ['./player-edit.component.css']
 })
-export class PlayerEditComponent implements OnChanges, OnInit {
+export class PlayerEditComponent implements OnInit {
     public player: Player;
     public playerForm: FormGroup;
     public genders: string[] = [
@@ -33,19 +33,19 @@ export class PlayerEditComponent implements OnChanges, OnInit {
 
     public ngOnInit() {
         this.getPlayer();
+        this.route.params.subscribe(params => {
+            if (!!params['playerId']) {
+                this.getPlayer();
+            }
+        });
     }
 
     private getPlayer() {
         this.playerService.getPlayer(this.route.snapshot.paramMap.get('playerId'))
             .subscribe(player => {
                 this.player = player;
+                this.revert();
             });
-    }
-
-    public ngOnChanges(changes: SimpleChanges) {
-        if (changes.player) {
-            this.revert();
-        }
     }
 
     public onSubmit() {
