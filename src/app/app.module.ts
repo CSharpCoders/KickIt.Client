@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 
@@ -15,7 +16,8 @@ import { PlayerService } from './shared/services/player.service';
     PlayerInfoComponent
   ],
   imports: [
-    BrowserModule
+      BrowserModule,
+      HttpClientModule
   ],
     providers: [
         PlayerService
